@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>webApi</title>
+    <style>
+        .cont {
+            display: flex;
+            flex-direction: row;
+            margin: 2.5vw;
+        }
+        .login{
+            display: flex;
+            flex-direction: column;
+            width: 20vw;
+            margin: 2.5vw;
+        }
+        
+        .newUser {
+            display: flex;
+            width: 20vw;
+            flex-direction: column
+        }
+
+    </style>
+    <script defer src="home.js"></script>
+</head>
+<body>
+    <div class="cont">
+        <div class="login">
+            <h1>משתמש רשום</h1>
+            <label for="userName1">אימייל</label>
+            <input type="email" id="userName1" name="userName1" required />
+            <label for="pass1">סיסמא</label>
+            <input type="password" id="pass1" name="pass1" required /><br />
+            <button onclick="login()">כניסה</button>
+            <div class="button"><u>משתמש חדש</u></div>
+        </div>
+
+        <div class="newUser">
+            <h1>משתמש חדש</h1>
+            <label for="userName">אימייל</label>
+            <input type="email" id="userName" name="userName1" required />
+            <label for="pass1">סיסמא</label>
+            <input type="password" id="pass" name="pass1" required />
+            <label for="firstName">שם פרטי</label>
+            <input type="text" id="firstName" name="firstName" required />
+            <label for="lastName">שם משפחה</label>
+            <input type="text" id="lastName" name="lastName" required /><br />
+            <button onclick="user()">רישום</button>
+        </div>
+    </div>
+
+</body>
+</html>
