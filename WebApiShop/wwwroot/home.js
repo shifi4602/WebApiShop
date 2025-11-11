@@ -32,7 +32,7 @@ async function user() {
             throw new Error(`HTTP error! status"${response.status}"`)
         }
     }
-     catch (e) {
+    catch (e) {
         console.log(e)
     }
     localStorage.setItem("user", JSON.stringify(newUser));

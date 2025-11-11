@@ -1,4 +1,4 @@
-namespace WebApiShop
+﻿namespace Enteties
 {
     public class WeatherForecast
     {

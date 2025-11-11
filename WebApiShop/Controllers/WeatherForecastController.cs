@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WebApiShop.Controllers
+namespace Enteties.Controllers
 {
     [ApiController]
     [Route("[controller]")]
