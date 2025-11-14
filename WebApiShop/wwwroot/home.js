@@ -1,5 +1,5 @@
 ﻿
-async function user() {
+async function GetIn() {
     const username = document.querySelector("#userName");
     const password = document.querySelector("#pass")
     const firstName = document.querySelector("#firstName")
@@ -23,10 +23,13 @@ async function user() {
                 body: JSON.stringify(newUser)
             });
         if (response.ok) {
-            const data = await response;
+            const data = await response.json();
             sessionStorage.setItem("User", JSON.stringify(data))
             console.log('Post data:', data);
             alert("המשתמש נרשם בהצלחה")
+        }
+        else if (response.status == 400) {
+            alert(`❗Your password is too weak`)
         }
         else {
             throw new Error(`HTTP error! status"${response.status}"`)
@@ -72,6 +75,45 @@ async function login() {
         console.log(e)
     }
 }
+
+
+const getPasswordStrenth = () => {
+    console.log("progress bar")
+    return document.querySelector("#pass").value
+}
+
+async function CheckPasswordStrength() {
+    console.log("check password");
+    const password = getPasswordStrenth();
+    const progressBar = document.querySelector(".progressBar")
+    try {
+        const response = await fetch(`/api/Passwords/CheckPasswordStrength`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(existUser)
+            });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status"${response.status}"`)
+        }
+        const data = await response.json();
+        
+        progressBar.value = (data.Strength) * 25;
+        if (response.status == 200) { return data.Strength / 4 }
+        else {return 0 }
+        console.log('Post data:', data);
+        return data;
+    }
+    catch (e) {
+        console.log(e)
+    }
+}
+
+
+  
+
 
 
 

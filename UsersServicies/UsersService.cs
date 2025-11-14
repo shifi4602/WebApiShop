@@ -1,14 +1,17 @@
 ﻿
 using Enteties;
-using UsersRepositories;
+using Repositories;
 
-namespace UsersServicies
+namespace Services
 {
     public class UsersService
     {
         UsersRepository usersRepository = new UsersRepository();
+        passwordServices passwordServices = new passwordServices();
         public Users AddNewUser(Users user)
         {
+            if (passwordServices.GetStrength(user.Password).Strength <= 2)
+                return null;
             return usersRepository.AddUser(user);
         }
 

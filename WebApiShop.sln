@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiShop", "WebApiShop\We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enteties", "Enteties\Enteties.csproj", "{78F97D51-0A62-45C6-968E-54A00147B4B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsersRepositories", "UsersRepository\UsersRepositories.csproj", "{35630338-D95E-4AB3-8BE1-E76EA60BC976}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "UsersRepository\Repositories.csproj", "{35630338-D95E-4AB3-8BE1-E76EA60BC976}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsersServicies", "UsersServicies\UsersServicies.csproj", "{27025A1A-87BF-4B7A-AE03-382A15154FC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "UsersServicies\Services.csproj", "{27025A1A-87BF-4B7A-AE03-382A15154FC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

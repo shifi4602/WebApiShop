@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using Enteties;
 
-namespace UsersRepositories
+namespace Repositories
 {
     public class UsersRepository
     {

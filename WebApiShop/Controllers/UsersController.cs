@@ -3,7 +3,7 @@ using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-using UsersServicies;
+using Services;
 
 namespace Enteties.Controllers
 {
@@ -28,11 +28,13 @@ namespace Enteties.Controllers
         // POST api/<UsersController>
         //List<users> user = new List<users>();
         
-        [HttpPost]
+        [HttpPost ("")]
         public ActionResult<Users> Post([FromBody] Users value)
         {
             Users user = usersServicies.AddNewUser(value);
-            return CreatedAtAction(nameof(Get), new { id = user.id }, user);
+            if (user == null)
+                return BadRequest("Password is too weak");
+            return CreatedAtAction(nameof(Get), new { user.id }, user);
         }
 
         [HttpPost ("login")]
