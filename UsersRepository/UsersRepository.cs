@@ -3,8 +3,9 @@ using Enteties;
 
 namespace Repositories
 {
-    public class UsersRepository
+    public class UsersRepository : IUsersRepository
     {
+        public UsersRepository() { }
         string filePath = "M:\\WebApi\\WebApiShop\\WebApiShop\\users.txt";
         public Users AddUser(Users value)
         {

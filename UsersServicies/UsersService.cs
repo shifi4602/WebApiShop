@@ -4,25 +4,36 @@ using Repositories;
 
 namespace Services
 {
-    public class UsersService
+    public class UsersService : IUsersService
     {
-        UsersRepository usersRepository = new UsersRepository();
-        passwordServices passwordServices = new passwordServices();
+        IUsersRepository _iUsersRepository;
+        IpasswordServices _iPasswordServices;
+        public UsersService(IUsersRepository usersRepository, IpasswordServices passwordServices) 
+        {
+            _iUsersRepository = usersRepository;
+            _iPasswordServices = passwordServices;
+        }
         public Users AddNewUser(Users user)
         {
-            if (passwordServices.GetStrength(user.Password).Strength <= 2)
+            if (_iPasswordServices.GetStrength(user.Password).Strength <= 2)
                 return null;
-            return usersRepository.AddUser(user);
+            return _iUsersRepository.AddUser(user);
         }
 
         public Users Login(UpdateUser user)
         {
-            return usersRepository.login(user);
+            return _iUsersRepository.login(user);
         }
 
-        public void UpdateUser(int id, Users userToUpdate)
+        public bool UpdateUser(int id, Users userToUpdate)
         {
-            usersRepository.UpdateUser(id, userToUpdate);
+            if (_iPasswordServices.GetStrength(userToUpdate.Password).Strength <= 2)
+            {
+                return false;
+            }
+            _iUsersRepository.UpdateUser(id, userToUpdate);
+            return true;
+
         }
     }
 }

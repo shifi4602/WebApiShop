@@ -9,9 +9,17 @@ namespace Enteties.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : ControllerBase, IUsersController
     {
-        UsersService usersServicies = new UsersService();
+        IUsersService _iUsersServicies;
+        IpasswordServices _iPasswordsServices;
+
+        public UsersController(IUsersService usersServicies, IpasswordServices passwordServices)
+        {
+            _iPasswordsServices = passwordServices;
+            _iUsersServicies = usersServicies;
+        }
+        
         [HttpGet]
         public IEnumerable<string> Get()
         {
@@ -27,21 +35,21 @@ namespace Enteties.Controllers
 
         // POST api/<UsersController>
         //List<users> user = new List<users>();
-        
-        [HttpPost ("")]
+
+        [HttpPost]
         public ActionResult<Users> Post([FromBody] Users value)
         {
-            Users user = usersServicies.AddNewUser(value);
+            Users user = _iUsersServicies.AddNewUser(value);
             if (user == null)
                 return BadRequest("Password is too weak");
             return CreatedAtAction(nameof(Get), new { user.id }, user);
         }
 
-        [HttpPost ("login")]
+        [HttpPost("login")]
         public ActionResult<Users> login([FromBody] UpdateUser value)
         {
-            Users user = usersServicies.Login(value);
-            if(user != null)
+            Users user = _iUsersServicies.Login(value);
+            if (user != null)
             {
                 return CreatedAtAction(nameof(Get), new { id = user.id }, user);
             }
@@ -51,9 +59,15 @@ namespace Enteties.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public void UpdateUser(int id, [FromBody] Users userToUpdate)
+        public IActionResult UpdateUser(int id, [FromBody] Users userToUpdate)
         {
-            usersServicies.UpdateUser(id, userToUpdate);
+            bool passwordsStrenght = _iUsersServicies.UpdateUser(id, userToUpdate);
+            if (passwordsStrenght)
+            {
+                return Ok(userToUpdate);
+            }
+            return NoContent();
+
         }
 
         // DELETE api/<UsersController>/5

@@ -8,9 +8,13 @@ namespace Enteties.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PasswordsControler : ControllerBase
+    public class PasswordsControler : ControllerBase, IPasswordsControler
     {
-        passwordServices service = new passwordServices();
+        IpasswordServices _iPasswordService;
+        public PasswordsControler(IpasswordServices iPasswordControler)
+        {
+            _iPasswordService = iPasswordControler;
+        }
         // GET: api/<PasswordControler>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -28,14 +32,14 @@ namespace Enteties.Controllers
         [HttpGet]
         public void Get(string pass)
         {
-            
+
         }
 
         // POST api/<PasswordControler>
-        [HttpPost("{pass}")]
+        [HttpPost("CheckPasswordStrength")]
         public ActionResult<PassEntity> CheckPasswordStrength([FromBody] string pass)
         {
-            PassEntity password = service.GetStrength(pass);
+            PassEntity password = _iPasswordService.GetStrength(pass);
             if (password == null)
                 return NoContent();
             return Ok(password);
