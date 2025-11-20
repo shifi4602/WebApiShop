@@ -11,55 +11,44 @@ namespace Enteties.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        UsersService usersServicies = new UsersService();
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        private readonly UsersService _usersService = new UsersService();
+        
+        
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<string> Get(int id)
         {
-            return "value";
+            return Ok("value");
         }
 
         // POST api/<UsersController>
-        //List<users> user = new List<users>();
-        
-        [HttpPost ("")]
-        public ActionResult<Users> Post([FromBody] Users value)
+        [HttpPost]
+        public ActionResult<Users> Post([FromBody] Users user)
         {
-            Users user = usersServicies.AddNewUser(value);
-            if (user == null)
-                return BadRequest("Password is too weak");
-            return CreatedAtAction(nameof(Get), new { user.id }, user);
+            Users result = _usersService.AddNewUser(user);
+            if (result == null)
+                return BadRequest("Password is not strong enough");
+            return CreatedAtAction(nameof(Get), new { result.Id }, result);
         }
 
-        [HttpPost ("login")]
-        public ActionResult<Users> login([FromBody] UpdateUser value)
+        [HttpPost("login")]
+        public ActionResult<Users> Login([FromBody] UpdateUser loginUser)
         {
-            Users user = usersServicies.Login(value);
-            if(user != null)
+            Users user = _usersService.Login(loginUser);
+            if (user != null)
             {
-                return CreatedAtAction(nameof(Get), new { id = user.id }, user);
+                return Ok(user);
             }
-            else
-                return NoContent();
+            return Unauthorized();
         }
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public void UpdateUser(int id, [FromBody] Users userToUpdate)
+        public ActionResult UpdateUser(int id, [FromBody] Users userToUpdate)
         {
-            usersServicies.UpdateUser(id, userToUpdate);
-        }
-
-        // DELETE api/<UsersController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            _usersService.UpdateUser(id, userToUpdate);
+            return NoContent();
         }
     }
 }

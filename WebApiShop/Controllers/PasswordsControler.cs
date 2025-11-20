@@ -8,49 +8,18 @@ namespace Enteties.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PasswordsControler : ControllerBase
+    public class PasswordsController : ControllerBase
     {
-        passwordServices service = new passwordServices();
-        // GET: api/<PasswordControler>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        private readonly passwordServices _passwordService = new passwordServices();
 
-        // GET api/<PasswordControler>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        [HttpGet]
-        public void Get(string pass)
-        {
-            
-        }
-
-        // POST api/<PasswordControler>
+        // POST api/<PasswordsController>
         [HttpPost("{pass}")]
         public ActionResult<PassEntity> CheckPasswordStrength([FromBody] string pass)
         {
-            PassEntity password = service.GetStrength(pass);
+            PassEntity password = _passwordService.GetStrength(pass);
             if (password == null)
-                return NoContent();
+                return BadRequest("Invalid password");
             return Ok(password);
-        }
-
-        // PUT api/<PasswordControler>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<PasswordControler>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
