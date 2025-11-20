@@ -6,23 +6,24 @@ namespace Services
 {
     public class UsersService
     {
-        UsersRepository usersRepository = new UsersRepository();
-        passwordServices passwordServices = new passwordServices();
+        private readonly UsersRepository _usersRepository = new UsersRepository();
+        private readonly passwordServices _passwordServices = new passwordServices();
+        
         public Users AddNewUser(Users user)
         {
-            if (passwordServices.GetStrength(user.Password).Strength <= 2)
+            if (_passwordServices.GetStrength(user.Password).Strength < 2)
                 return null;
-            return usersRepository.AddUser(user);
+            return _usersRepository.AddUser(user);
         }
 
         public Users Login(UpdateUser user)
         {
-            return usersRepository.login(user);
+            return _usersRepository.Login(user);
         }
 
         public void UpdateUser(int id, Users userToUpdate)
         {
-            usersRepository.UpdateUser(id, userToUpdate);
+            _usersRepository.UpdateUser(id, userToUpdate);
         }
     }
 }
