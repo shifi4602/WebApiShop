@@ -6,8 +6,8 @@ namespace Services
 {
     public class UsersService : IUsersService
     {
-        IUsersRepository _iUsersRepository;
-        IpasswordServices _iPasswordServices;
+        private readonly IUsersRepository _iUsersRepository;
+        private readonly IpasswordServices _iPasswordServices;
         public UsersService(IUsersRepository usersRepository, IpasswordServices passwordServices) 
         {
             _iUsersRepository = usersRepository;

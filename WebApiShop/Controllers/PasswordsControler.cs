@@ -10,29 +10,10 @@ namespace Enteties.Controllers
     [ApiController]
     public class PasswordsControler : ControllerBase, IPasswordsControler
     {
-        IpasswordServices _iPasswordService;
+        private readonly IpasswordServices _iPasswordService;
         public PasswordsControler(IpasswordServices iPasswordControler)
         {
             _iPasswordService = iPasswordControler;
-        }
-        // GET: api/<PasswordControler>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<PasswordControler>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        [HttpGet]
-        public void Get(string pass)
-        {
-
         }
 
         // POST api/<PasswordControler>
@@ -43,18 +24,6 @@ namespace Enteties.Controllers
             if (password == null)
                 return NoContent();
             return Ok(password);
-        }
-
-        // PUT api/<PasswordControler>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<PasswordControler>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

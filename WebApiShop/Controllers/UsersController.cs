@@ -11,8 +11,8 @@ namespace Enteties.Controllers
     [ApiController]
     public class UsersController : ControllerBase, IUsersController
     {
-        IUsersService _iUsersServicies;
-        IpasswordServices _iPasswordsServices;
+        private readonly IUsersService _iUsersServicies;
+        private readonly IpasswordServices _iPasswordsServices;
 
         public UsersController(IUsersService usersServicies, IpasswordServices passwordServices)
         {
@@ -54,7 +54,7 @@ namespace Enteties.Controllers
                 return CreatedAtAction(nameof(Get), new { id = user.id }, user);
             }
             else
-                return NoContent();
+                return Unauthorized();
         }
 
         // PUT api/<UsersController>/5
@@ -64,16 +64,10 @@ namespace Enteties.Controllers
             bool passwordsStrenght = _iUsersServicies.UpdateUser(id, userToUpdate);
             if (passwordsStrenght)
             {
-                return Ok(userToUpdate);
+                return NoContent();
             }
-            return NoContent();
+            return BadRequest("Password is too weak");
 
-        }
-
-        // DELETE api/<UsersController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

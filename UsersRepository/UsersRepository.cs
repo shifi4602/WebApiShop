@@ -5,8 +5,8 @@ namespace Repositories
 {
     public class UsersRepository : IUsersRepository
     {
+        private readonly string filePath = Path.Combine(Directory.GetCurrentDirectory(), "users.txt");
         public UsersRepository() { }
-        string filePath = "M:\\WebApi\\WebApiShop\\WebApiShop\\users.txt";
         public Users AddUser(Users value)
         {
             int numberOfUsers = System.IO.File.ReadLines(filePath).Count();
