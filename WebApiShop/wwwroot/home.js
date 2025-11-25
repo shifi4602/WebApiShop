@@ -82,7 +82,7 @@ async function CheckPasswordStrength() {
     let password =  document.querySelector("#pass").value
     const progressBar = document.querySelector(".progressBar")
     try {
-        const response = await fetch('/api/passwords/CheckPasswordStrength`,
+        const response = await fetch('/api/passwords/CheckPasswordStrength',
             {
                 method: 'POST',
                 headers: {
