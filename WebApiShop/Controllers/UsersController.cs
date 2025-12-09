@@ -12,13 +12,13 @@ namespace Enteties.Controllers
 
     public class UsersController : ControllerBase
     {
-        IUsersService _iUsersServicies;
-        IpasswordServices _iPasswordsServices;
+        private readonly IUsersService _usersService;
+        private readonly IPasswordServices _passwordServices;
         
-        public UsersController(IUsersService usersServicies, IpasswordServices passwordServices)
+        public UsersController(IUsersService usersService, IPasswordServices passwordServices)
         {
-            _iPasswordsServices = passwordServices;
-            _iUsersServicies = usersServicies;
+            _passwordServices = passwordServices;
+            _usersService = usersService;
         }
         
         // GET api/<UsersController>/5
@@ -33,19 +33,19 @@ namespace Enteties.Controllers
 
         public async Task<ActionResult<User>> Post([FromBody] User value)
         {
-            User user = await _iUsersServicies.AddNewUser(value);
+            User user = await _usersService.AddNewUser(value);
             if (user == null)
                 return BadRequest("Password is too weak");
             return CreatedAtAction(nameof(Get), new { user.Id }, user);
         }
         
         [HttpPost("login")]
-        public  async Task<ActionResult<User>> login([FromBody] UpdateUser value)
+        public async Task<ActionResult<User>> Login([FromBody] UpdateUser value)
         {
-            User user = await _iUsersServicies.Login(value);
+            User user = await _usersService.Login(value);
             if (user != null)
             {
-                return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
+                return Ok(user);
             }
             return Unauthorized();
         }
@@ -54,12 +54,12 @@ namespace Enteties.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] User userToUpdate)
         {
-            bool passwordsStrenght = await _iUsersServicies.UpdateUser(id, userToUpdate);
+            bool passwordsStrenght = await _usersService.UpdateUser(id, userToUpdate);
             if (passwordsStrenght)
             {
-                return Ok(userToUpdate);
+                return NoContent();
             }
-            return NoContent();
+            return BadRequest("Password is too weak");
         
         }
     }

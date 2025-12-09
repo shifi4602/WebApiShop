@@ -8,7 +8,7 @@ namespace Repositories
 {
     public class UsersRepository : IUsersRepository
     {
-        ApiShopContext _apiShopContext;
+        private readonly ApiShopContext _apiShopContext;
         public UsersRepository(ApiShopContext apiShopContext)
         {
             _apiShopContext = apiShopContext;
@@ -20,7 +20,7 @@ namespace Repositories
             return user;
         }
 
-        public async Task<User> login(UpdateUser updateUser)
+        public async Task<User> Login(UpdateUser updateUser)
         {
             return await _apiShopContext.Users.FirstOrDefaultAsync(x => x.Email == updateUser.Email && x.Password == updateUser.Password);
         }
