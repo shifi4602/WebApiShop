@@ -6,9 +6,6 @@ using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-// Configure the HTTP request pipeline.
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
@@ -39,10 +36,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-
-
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
 
 app.UseAuthorization();

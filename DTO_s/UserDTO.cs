@@ -5,6 +5,7 @@
         int Id,
         string FirstName,
         string LastName,
+        [EmailAddress]
         string Email
     );
 }

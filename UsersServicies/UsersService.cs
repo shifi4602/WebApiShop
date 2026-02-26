@@ -5,24 +5,25 @@ namespace Services
 {
     public class UsersService : IUsersService
     {
-        private readonly IUsersRepository _iUsersRepository;
+        private readonly IUsersRepository _usersRepository;
         private readonly IpasswordServices _passwordServices;
 
         public UsersService(IUsersRepository usersRepository, IpasswordServices passwordServices)
         {
-            _iUsersRepository = usersRepository;
+            _usersRepository = usersRepository;
             _passwordServices = passwordServices;
         }
+
         public async Task<User> AddNewUser(User user)
         {
             if (_passwordServices.GetStrength(user.Password).Strength <= 2)
                 return null;
-            return await _iUsersRepository.AddUser(user);
+            return await _usersRepository.AddUser(user);
         }
 
         public async Task<User> Login(UpdateUser user)
         {
-            return await _iUsersRepository.login(user);
+            return await _usersRepository.login(user);
         }
 
         public async Task<bool> UpdateUser(int id, User userToUpdate)
@@ -31,7 +32,7 @@ namespace Services
             {
                 return false;
             }
-            await _iUsersRepository.UpdateUserAsync(id, userToUpdate);
+            await _usersRepository.UpdateUserAsync(id, userToUpdate);
             return true;
         }
 
