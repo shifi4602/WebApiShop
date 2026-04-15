@@ -53,7 +53,7 @@ async function login() {
         Password: password.value,
     };
     try {
-        const response = await fetch('/api/users/login',
+        const response = await fetch('https://localhost:44350/api/users/login',
             {
                 method: 'POST',
                 headers: {

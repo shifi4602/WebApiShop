@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    internal class AutoMapper: Profile
+    public class AutoMapper: Profile
     {
         public AutoMapper() 
         {
@@ -17,8 +17,7 @@ namespace Services
             CreateMap<OrderItem, OrderItemDTO>().ReverseMap();
             CreateMap<Order, OrdersDTO>().ReverseMap();
             CreateMap<Product, ProductDTO>().ReverseMap();
-            CreateMap<Category, CategroryDTO>().ReverseMap();
-            
+            CreateMap<Category, CategroryDTO>().ReverseMap();  
         }
     }
 }

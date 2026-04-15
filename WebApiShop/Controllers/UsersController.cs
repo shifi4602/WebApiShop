@@ -24,13 +24,6 @@ namespace Enteties.Controllers
             _logger = logger;
         }
         
-        // GET api/<UsersController>/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return Ok("value");
-        }
-        
         // POST api/<UsersController>
         [HttpPost]
 
@@ -39,7 +32,7 @@ namespace Enteties.Controllers
             UserDTO user = await _iUsersServicies.AddNewUser(value, password);
             if (user == null)
                 return BadRequest("Password is too weak");
-            return CreatedAtAction(nameof(Get), new { user.id }, user);
+            return CreatedAtAction(nameof(GetById), new { id = user.id }, user);
         }
         
         [HttpPost("login")]
@@ -49,7 +42,7 @@ namespace Enteties.Controllers
             if (user != null)
             {
                 _logger.LogInformation("Login attempted with User Email: " + value.Email  + "and password: " + value.Password);
-                return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
+                return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
             }
             _logger.LogError("Error in getting user");
             return Unauthorized();

@@ -11,16 +11,23 @@ namespace WebApiShop.MiddleWare
             _next = next;
         }
 
-        public async Task Invoke(HttpContext httpContext, IRatingService ratingService)
+        public async Task Invoke(HttpContext httpContext, IRatingService ratingService, ILogger<RatingMiddleware> logger)
         {
-            Rating rating = new Rating();
-            rating.Host = httpContext.Request.Host.Value;
-            rating.Method = httpContext.Request.Method;
-            rating.Path = httpContext.Request.Path;
-            rating.Referer = httpContext.Request.Headers.Referer;
-            rating.UserAgent = httpContext.Request.Headers.UserAgent;
-            rating.RecordDate = DateTime.Now;
-            await ratingService.AddRating(rating);
+            try
+            {
+                Rating rating = new Rating();
+                rating.Host = httpContext.Request.Host.Value;
+                rating.Method = httpContext.Request.Method;
+                rating.Path = httpContext.Request.Path;
+                rating.Referer = httpContext.Request.Headers.Referer;
+                rating.UserAgent = httpContext.Request.Headers.UserAgent;
+                rating.RecordDate = DateTime.Now;
+                await ratingService.AddRating(rating);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Failed to record rating; continuing without blocking request.");
+            }
             await _next(httpContext);
         }
     }

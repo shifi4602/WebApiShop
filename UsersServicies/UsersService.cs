@@ -42,7 +42,7 @@ namespace Services
             User user = _mapper.Map<UserDTO, User>(userToUpdate);
             user.Id = id;
             user.Password = password;
-            await _iUsersRepository.UpdateUserAsync(user);
+            await _iUsersRepository.UpdateUser(user);
             return true;
         }
 

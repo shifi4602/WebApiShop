@@ -25,7 +25,7 @@ namespace Repositories
             return await _apiShopContext.Users.FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
         }
 
-        public async Task UpdateUserAsync(User userToUpdate)
+        public async Task UpdateUser(User userToUpdate)
         {
             _apiShopContext.Users.Update(userToUpdate);
             await _apiShopContext.SaveChangesAsync();
