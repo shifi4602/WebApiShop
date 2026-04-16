@@ -28,9 +28,6 @@ async function GetIn() {
             console.log('Post data:', data);
             alert("המשתמש נרשם בהצלחה")
         }
-        else if (response.status == 400) {
-            alert(`❗Your password is too weak`)
-        }
         else {
             throw new Error(`HTTP error! status"${response.status}"`)
         }

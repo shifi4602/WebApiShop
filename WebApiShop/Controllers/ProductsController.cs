@@ -27,5 +27,14 @@ namespace WebApiShop.Controllers
             //return NoContent();
             return await _iProtuctService.GetProducts(position, skip, name, description, categoryIds, minPrice, maxPrice, orderBy);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductDTO>> GetById(int id)
+        {
+            ProductDTO product = await _iProtuctService.GetProductById(id);
+            if (product == null)
+                return NotFound();
+            return Ok(product);
+        }
     }
 }

@@ -53,5 +53,11 @@ namespace Repositories
                 .Take(skip).Include(p => p.Category).ToListAsync();
             return (products, total);
         }
+
+        public async Task<Product> GetProductById(int id)
+        {
+            return await _apiShopContext.Products.FindAsync(id);
+
+        }
     }
 }

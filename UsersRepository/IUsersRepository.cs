@@ -9,5 +9,6 @@ namespace Repositories
         Task<User> login(string email, string password);
         Task UpdateUser(User userToUpdate);
         Task<User> GetById(int id);
+        Task<bool> UserWithSameEmail(string email, int id);
     }
 }

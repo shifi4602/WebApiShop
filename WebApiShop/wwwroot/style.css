@@ -1,0 +1,240 @@
+/* ── Reset & base ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --primary:    #4f46e5;
+    --primary-h:  #4338ca;
+    --accent:     #06b6d4;
+    --bg:         #f1f5f9;
+    --surface:    #ffffff;
+    --border:     #e2e8f0;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --danger:     #ef4444;
+    --success:    #22c55e;
+    --radius:     14px;
+    --shadow:     0 4px 24px rgba(0,0,0,.09);
+    --transition: .2s ease;
+}
+
+html { font-size: 16px; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Top nav bar ──────────────────────────────────────── */
+.navbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 6px rgba(0,0,0,.06);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar .brand {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: -.5px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+}
+
+.navbar .brand span { color: var(--accent); }
+
+.navbar nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: 500;
+    margin-inline-start: 1.4rem;
+    transition: color var(--transition);
+}
+.navbar nav a:hover { color: var(--primary); }
+
+/* ── Page hero ────────────────────────────────────────── */
+.page-hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: #fff;
+    text-align: center;
+    padding: 3rem 1rem 4.5rem;
+}
+.page-hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: .4rem; }
+.page-hero p  { opacity: .85; font-size: 1rem; }
+
+/* ── Card grid ────────────────────────────────────────── */
+.cards-wrapper {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 2.5rem 1.5rem;
+    margin-top: -2.5rem;   /* overlap hero */
+}
+
+.card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 2rem 2.2rem;
+    width: 360px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    animation: fadeUp .35s ease both;
+}
+
+.card h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: .6rem;
+    margin-bottom: .2rem;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Form controls ────────────────────────────────────── */
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+}
+
+label {
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    padding: .65rem .9rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: .95rem;
+    color: var(--text);
+    background: var(--bg);
+    transition: border-color var(--transition), box-shadow var(--transition);
+    width: 100%;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79,70,229,.15);
+    background: #fff;
+}
+
+/* ── Buttons ──────────────────────────────────────────── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .4rem;
+    padding: .65rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(79,70,229,.35);
+}
+.btn-primary:hover {
+    background: var(--primary-h);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(79,70,229,.4);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+}
+.btn-outline:hover {
+    background: var(--primary);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.btn-accent {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(6,182,212,.3);
+}
+.btn-accent:hover {
+    background: #0891b2;
+    transform: translateY(-1px);
+}
+
+/* ── Password strength bar ────────────────────────────── */
+.strength-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+}
+
+.strength-bar {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 99px;
+    border: none;
+    background: var(--border);
+    overflow: hidden;
+}
+.strength-bar::-webkit-progress-bar   { background: var(--border); border-radius: 99px; }
+.strength-bar::-webkit-progress-value { background: linear-gradient(90deg, var(--danger), #fb923c, #facc15, var(--success)); border-radius: 99px; transition: width .4s ease; }
+.strength-bar::-moz-progress-bar      { background: linear-gradient(90deg, var(--danger), #fb923c, #facc15, var(--success)); border-radius: 99px; }
+
+/* ── Divider ──────────────────────────────────────────── */
+.divider {
+    height: 1px;
+    background: var(--border);
+    margin: .4rem 0;
+}
+
+/* ── Footer ──────────────────────────────────────────── */
+footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 1.2rem;
+    font-size: .8rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+}
+
+/* ── Utility ──────────────────────────────────────────── */
+.text-muted  { color: var(--muted); font-size: .85rem; }
+.text-center { text-align: center; }
+.w-full      { width: 100%; }

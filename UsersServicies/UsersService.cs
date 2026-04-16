@@ -7,21 +7,20 @@ namespace Services
 {
     public class UsersService : IUsersService
     {
-        private readonly IUsersRepository _iUsersRepository;
+        private readonly IUsersRepository _userRepository;
         private readonly IpasswordServices _passwordServices;
         IMapper _mapper;
 
         public UsersService(IUsersRepository usersRepository, IpasswordServices passwordServices, IMapper imapper)
         {
-            _iUsersRepository = usersRepository;
+            _userRepository = usersRepository;
             _passwordServices = passwordServices;
             _mapper = imapper;
         }
-        public async Task<UserDTO> AddNewUser(UserDTO userDTO, string password)
+        public async Task<UserDTO> AddNewUser(postUserDto newUser)
         {
-            User user = _mapper.Map<UserDTO, User>(userDTO);
-            user.Password = password;
-            User userResult = await _iUsersRepository.AddUser(user);
+            User user = _mapper.Map<postUserDto, User>(newUser);
+            User userResult = await _userRepository.AddUser(user);
             UserDTO userDTOres = _mapper.Map<User, UserDTO>(userResult);
             if (_passwordServices.GetStrength(user.Password).Strength <= 2)
                 return null;
@@ -30,27 +29,30 @@ namespace Services
 
         public async Task<User> Login(ExisitingUser user)
         {
-            return await _iUsersRepository.login(user.Email, user.Password);
+            return await _userRepository.login(user.Email, user.Password);
         }
 
-        public async Task<bool> UpdateUser(int id, UserDTO userToUpdate, string password)
+        public async Task<bool> UpdateUser(int id, postUserDto userToUpdate)
         {
-            if (_passwordServices.GetStrength(password).Strength <= 2)
+            if (_passwordServices.GetStrength(userToUpdate.Password).Strength <= 2)
             {
                 return false;
             }
-            User user = _mapper.Map<UserDTO, User>(userToUpdate);
-            user.Id = id;
-            user.Password = password;
-            await _iUsersRepository.UpdateUser(user);
+            User user = _mapper.Map<postUserDto, User>(userToUpdate);
+            await _userRepository.UpdateUser(user);
             return true;
         }
 
         public async Task<UserDTO> GetById(int id)
         {
-            User user = await _iUsersRepository.GetById(id);
+            User user = await _userRepository.GetById(id);
             UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
             return userDTO;
+        }
+
+        public async Task<bool> UserWithSameEmail(string email, int id = -1)
+        {
+            return await _userRepository.UserWithSameEmail(email, id);
         }
     }
 }

@@ -6,9 +6,8 @@ namespace DTO_s
     (
         int id,
         string FirstName,
-        [StringLength(16, ErrorMessage = "Last name cant be more than 16 letters.")]
         string LastName,
-        [EmailAddress (ErrorMessage = "the input must be in email format ... @ . "), Required(ErrorMessage = "email is required")]
-        string Email
+        string Email,
+        ICollection<OrdersDTO> Orders
     );
 }

@@ -36,6 +36,21 @@ namespace Repositories
             return await _apiShopContext.Users.FindAsync(id);
         }
 
+        public async Task<bool> UserWithSameEmail(string email, int id)
+        {
+            User userWithSameEmail;
+            if (id < 0)
+            {
+                userWithSameEmail = await _apiShopContext.Users.FirstOrDefaultAsync(user => user.Email == email);
+            }
+            else
+            {
+                userWithSameEmail = await _apiShopContext.Users.FirstOrDefaultAsync(user => user.Email == email && user.Id != id);
+            }
+            if (userWithSameEmail == null)
+                return true;
+            return false;
+        }
     }
 }
 

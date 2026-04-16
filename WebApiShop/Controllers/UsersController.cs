@@ -27,9 +27,9 @@ namespace Enteties.Controllers
         // POST api/<UsersController>
         [HttpPost]
 
-        public async Task<ActionResult<UserDTO>> Post([FromBody] UserDTO value, string password)
+        public async Task<ActionResult<UserDTO>> Post([FromBody] postUserDto newUser)
         {
-            UserDTO user = await _iUsersServicies.AddNewUser(value, password);
+            UserDTO user = await _iUsersServicies.AddNewUser(newUser);
             if (user == null)
                 return BadRequest("Password is too weak");
             return CreatedAtAction(nameof(GetById), new { id = user.id }, user);
@@ -50,9 +50,9 @@ namespace Enteties.Controllers
         
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserDTO userToUpdate, string password)
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] postUserDto userToUpdate)
         {
-            bool passwordsStrenght = await _iUsersServicies.UpdateUser(id, userToUpdate, password);
+            bool passwordsStrenght = await _iUsersServicies.UpdateUser(id, userToUpdate);
             if (passwordsStrenght)
             {
                 return Ok(userToUpdate);
@@ -69,6 +69,5 @@ namespace Enteties.Controllers
                 return NotFound();
             return Ok(user);
         }
-
     }
 }

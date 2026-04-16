@@ -1,28 +1,63 @@
 ﻿<!DOCTYPE html>
-<html>
+<html dir="rtl" lang="he">
 <head>
     <meta charset="utf-8" />
-    <title></title>
-    <style>
-        .newUser {
-            display: flex;
-            flex-direction: column;
-            width: 20vw;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebApiShop — עדכון פרופיל</title>
+    <link rel="stylesheet" href="style.css" />
     <script defer src="update.js"></script>
 </head>
 <body>
-    <div class="newUser">
-        <label for="userName1">שם משתמש</label>
-        <input type="email" id="userName" name="userName1" required />
-        <label for="pass1">סיסמא</label>
-        <input type="password" id="pass" name="pass1" required />
-        <label for="firstName">שם פרטי</label>
-        <input type="text" id="firstName" name="firstName" required />
-        <label for="lastName">שם משפחה</label>
-        <input type="text" id="lastName" name="lastName" required /><br />
-        <button onclick="update()">עדכן</button>
-    </div>
+
+    <!-- ── Navbar ── -->
+    <header class="navbar">
+        <a class="brand" href="home.html">🛒 WebApi<span>Shop</span></a>
+        <nav>
+            <a href="home.html">יציאה</a>
+        </nav>
+    </header>
+
+    <!-- ── Hero ── -->
+    <section class="page-hero">
+        <h1>עדכון פרטי חשבון</h1>
+        <p>שנה את הפרטים שלך בכל עת</p>
+    </section>
+
+    <!-- ── Card ── -->
+    <main class="cards-wrapper">
+        <div class="card">
+            <h2>✏️ עדכון פרופיל</h2>
+
+            <div class="field">
+                <label for="userName">אימייל חדש</label>
+                <input type="email" id="userName" name="userName" placeholder="your@email.com" required />
+            </div>
+
+            <div class="field">
+                <label for="pass">סיסמא חדשה</label>
+                <input type="password" id="pass" name="pass" placeholder="••••••••" required />
+            </div>
+
+            <div class="field">
+                <label for="firstName">שם פרטי</label>
+                <input type="text" id="firstName" name="firstName" placeholder="ישראל" required />
+            </div>
+
+            <div class="field">
+                <label for="lastName">שם משפחה</label>
+                <input type="text" id="lastName" name="lastName" placeholder="ישראלי" required />
+            </div>
+
+            <div class="divider"></div>
+
+            <button class="btn btn-primary w-full" onclick="update()">💾 שמור שינויים</button>
+            <a href="home.html" class="btn btn-outline w-full text-center" style="text-decoration:none; margin-top:.3rem;">ביטול</a>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 WebApiShop — כל הזכויות שמורות
+    </footer>
+
 </body>
 </html>
