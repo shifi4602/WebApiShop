@@ -8,9 +8,8 @@ using Xunit;
 
 namespace TestProject
 {
-    // Integration-style tests against EF Core InMemory provider.
-    // IAsyncLifetime provides async per-test setup/teardown hooks.
-    public class OrdersRepositoryIntegrationTests //: IAsyncLifetime
+    // Integration tests against EF Core InMemory provider with isolated per-test databases.
+    public class OrdersRepositoryIntegrationTests : IDisposable
     {
         private readonly ApiShopContext _context;
         private readonly IOrdersRepository _repository;
@@ -19,7 +18,7 @@ namespace TestProject
         public OrdersRepositoryIntegrationTests()
         {
             var options = new DbContextOptionsBuilder<ApiShopContext>()
-                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .UseInMemoryDatabase(databaseName: $"Integration_Orders_{Guid.NewGuid()}")
                 .Options;
 
             _context = new ApiShopContext(options);  // Create a fresh context for each test
@@ -120,6 +119,69 @@ namespace TestProject
             Assert.NotNull(savedOrder);
             Assert.Equal(order.OrderId, savedOrder.OrderId);
             Assert.Single(savedOrder.OrderItems);
+        }
+
+        // Test adding an order with no items
+        [Fact]
+        public async Task AddOrder_WithNoItems_ShouldAddOrderSuccessfully()
+        {
+            // Arrange
+            var order = new Order
+            {
+                OrderId = 4,
+                OrderItems = new List<OrderItem>()
+            };
+
+            // Act
+            var result = await _repository.AddOrder(order);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(4, result.OrderId);
+            Assert.Empty(result.OrderItems);
+        }
+
+        // Test that GetOrderById includes all order items
+        [Fact]
+        public async Task GetOrderById_ShouldReturnAllOrderItems()
+        {
+            // Arrange
+            var order = new Order
+            {
+                OrderId = 5,
+                OrderItems = new List<OrderItem>
+                {
+                    new OrderItem { ProductId = 1, Quantity = 1 },
+                    new OrderItem { ProductId = 2, Quantity = 2 },
+                    new OrderItem { ProductId = 3, Quantity = 3 }
+                }
+            };
+            await _repository.AddOrder(order);
+
+            // Act
+            var result = await _repository.GetOrderById(5);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(3, result.OrderItems.Count);
+        }
+
+        // Test that fetching returns the correct order when multiple orders exist
+        [Fact]
+        public async Task GetOrderById_ShouldReturnCorrectOrder_WhenMultipleOrdersExist()
+        {
+            // Arrange
+            var order1 = new Order { OrderId = 6, OrderItems = new List<OrderItem>() };
+            var order2 = new Order { OrderId = 7, OrderItems = new List<OrderItem>() };
+            await _repository.AddOrder(order1);
+            await _repository.AddOrder(order2);
+
+            // Act
+            var result = await _repository.GetOrderById(7);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(7, result.OrderId);
         }
     }
 }

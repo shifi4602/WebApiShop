@@ -1,11 +1,14 @@
 ﻿using Enteties.Controllers;
 using Microsoft.EntityFrameworkCore;
+using NLog;
+using NLog.Web;
 using Repositories;
 using Services;
 using WebApiShop.MiddleWare;
 
-var builder = WebApplication.CreateBuilder(args);
 
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Add services to the container.
 
 // Configure the HTTP request pipeline.
@@ -23,6 +26,8 @@ builder.Services.AddScoped<IProtuctService, ProtuctService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 
 builder.Services.AddDbContext<ApiShopContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("School")));
+
+builder.Host.UseNLog();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

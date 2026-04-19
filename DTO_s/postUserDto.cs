@@ -10,7 +10,7 @@ namespace DTO_s
 {
     public record postUserDto
     (
-     int Id,
+     //int Id,
 
      [EmailAddress (ErrorMessage = "the input must be in email format ... @ . "), Required(ErrorMessage = "email is required")]
      string Email,
