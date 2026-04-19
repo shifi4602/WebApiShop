@@ -31,6 +31,8 @@ namespace WebApiShop.Controllers
         [HttpPost]
         public async Task<ActionResult<OrdersDTO>> Post([FromBody] OrdersDTO orderDto)
         {
+            if (orderDto == null)
+                return BadRequest("the order som is incorrect");
             OrdersDTO orderResult = await _iOrderService.AddNewOrder(orderDto);
             return CreatedAtAction(nameof(GetById), new { id = orderResult.OrderId }, orderResult);
         }

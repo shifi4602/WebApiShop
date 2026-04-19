@@ -17,7 +17,7 @@ namespace Repositories
             _apiShopContext = apiShopContext;
         }
 
-        public async Task<(List<Product> Items, int TotalCount)> GetProducts(int position, int skip, string? name, string? description, int[]? categories, int? nimPrice, int? maxPrice, string? orderBy)
+        public async Task<(List<Product> Items, int TotalCount)> GetProducts(int? position, int? skip, string? name, string? description, int[]? categories, int? nimPrice, int? maxPrice, string? orderBy)
         {
             position = position < 1 ? 1 : position;
             skip = skip < 1 ? 10 : skip;
@@ -49,8 +49,8 @@ namespace Repositories
 
             Console.WriteLine(query.ToQueryString());
             var total = await query.CountAsync();
-            var products = await query.Skip((position - 1) * skip)
-                .Take(skip).Include(p => p.Category).ToListAsync();
+            var products = await query.Skip((position ?? 1 - 1) * skip?? 6)
+                .Take(skip ?? 6).Include(p => p.Category).ToListAsync();
             return (products, total);
         }
 

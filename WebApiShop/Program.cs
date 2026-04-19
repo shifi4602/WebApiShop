@@ -27,7 +27,7 @@ builder.Services.AddScoped<IRatingService, RatingService>();
 
 builder.Services.AddDbContext<ApiShopContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("School")));
 
-builder.Host.UseNLog();
+//builder.Host.UseNLog();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

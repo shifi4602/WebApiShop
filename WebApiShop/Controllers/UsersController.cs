@@ -31,7 +31,7 @@ namespace Enteties.Controllers
         {
             UserDTO user = await _iUsersServicies.AddNewUser(newUser);
             if (user == null)
-                return BadRequest("Password is too weak");
+                return BadRequest("your password is too weak");
             return CreatedAtAction(nameof(GetById), new { id = user.id }, user);
         }
         
